@@ -61,8 +61,6 @@ similar results to the ``cp`` commandline tool.
                           [--encrypt "string"]                                      \
                           [--encrypt-key]                                           \
                           [--legal-hold "on"]                                       \
-                          [--limit-upload "string"]                                 \
-                          [--limit-download "string"]                               \
                           [--md5]                                                   \
                           [--newer-than "string"]                                   \
                           [--older-than "string"]                                   \
@@ -189,7 +187,7 @@ Parameters
 
    Specify ``on``.
 
-.. mc-cmd:: md5
+.. mc-cmd:: --md5
    :optional:
 
    Forces all uploads to calculate MD5 checksums. 

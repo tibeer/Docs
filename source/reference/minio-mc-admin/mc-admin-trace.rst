@@ -97,13 +97,17 @@ Syntax
 
    Valid call types include:
 
-   - ``s3``
-   - ``internal``
-   - ``storage``
-   - ``os``
-   - ``scanner``
+   - ``batch-replication``
    - ``decommission``
    - ``healing``
+   - ``internal``
+   - ``os``
+   - ``rebalance``
+   - ``replication-resync``
+   - ``s3``
+   - ``storage``
+
+   If not specified, MinIO returns call types of ``s3``.
 
 .. mc-cmd:: --verbose
    
@@ -117,6 +121,8 @@ Syntax
 
    Takes a time string as a value, such as ``5ms``.
    Returns only calls with a response time greater than the supplied threshold.
+
+   If not specified, MinIO returns calls with a response time greater than 5ms.
 
 .. mc-cmd:: --status-code
 
