@@ -134,7 +134,7 @@ Use :mc:`mc ilm rule ls` to list a bucket's lifecycle management rules:
 
    mc ilm rule ls ALIAS/PATH
 
-- Replace :mc-cmd:`ALIAS <mc ilm rule s ALIAS>` with the 
+- Replace :mc-cmd:`ALIAS <mc ilm rule ls ALIAS>` with the 
   :mc:`alias <mc alias>` of the S3-compatible host.
 
 - Replace ``PATH`` with the path to the bucket on the S3-compatible host.

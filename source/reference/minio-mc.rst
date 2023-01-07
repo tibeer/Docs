@@ -282,7 +282,7 @@ The following table lists :mc-cmd:`mc` commands:
        | :mc:`mc quota info`
        | :mc:`mc quota clear`
 
-     - The :mc:`mc quota` commands configure, display, or remove a hard quota limit on a bucket. 
+     - The ``mc quota`` commands configure, display, or remove a hard quota limit on a bucket. 
        When a bucket with a quota configured reaches the specified limit, MinIO rejects further ``PUT`` requests for the bucket. 
      
    * - :mc:`mc rb`

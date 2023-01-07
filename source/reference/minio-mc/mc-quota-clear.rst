@@ -19,7 +19,7 @@ Description
 
 .. start-mc-quota-clear-desc
 
-The :mc-cmd:`mc quota` command removes a configured storage quota for a bucket.
+The :mc-cmd:`mc quota clear` command removes a configured storage quota for a bucket.
 
 .. end-mc-quota-clear-desc
 

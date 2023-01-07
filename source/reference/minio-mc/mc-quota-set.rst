@@ -68,7 +68,7 @@ Examples
 Configure a Hard Quota on a Bucket
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use :mc-cmd:`mc quota` with the :mc-cmd:`~mc quota --size` flag to specify a hard quota on a bucket. 
+Use :mc-cmd:`mc quota set` with the :mc-cmd:`~mc quota set --size` flag to specify a hard quota on a bucket. 
 Hard quotas prevent the bucket size from growing past the specified limit.
 
 .. code-block:: shell
