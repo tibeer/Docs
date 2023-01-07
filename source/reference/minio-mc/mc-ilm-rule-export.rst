@@ -1,8 +1,8 @@
-.. _minio-mc-ilm-export:
+.. _minio-mc-ilm-rule-export:
 
-=================
-``mc ilm export``
-=================
+======================
+``mc ilm rule export``
+======================
 
 .. default-domain:: minio
 
@@ -10,26 +10,23 @@
    :local:
    :depth: 2
 
-.. mc:: mc ilm export
+.. mc:: mc ilm rule export
 
 .. versionchanged:: RELEASE.2022-12-24T15-21-38Z
 
-   ``mc ilm export`` replaced by :mc-cmd:`mc ilm rule export`
-
+   ``mc ilm rule export`` replaces ``mc ilm export``.
 
 Syntax
 ------
 
-.. start-mc-ilm-export-desc
+.. start-mc-ilm-rule-export-desc
 
-The :mc:`mc ilm export` command exports the object lifecycle management
-configuration for a MinIO bucket.
+The :mc:`mc ilm rule export` command exports the object lifecycle management configuration for a MinIO bucket.
 
-.. end-mc-ilm-export-desc
+.. end-mc-ilm-rule-export-desc
 
-The :mc:`mc ilm export` command outputs to ``STDOUT`` by default. You can
-output the contents to a ``.json`` file for archival or ingestion using
-:mc:`mc ilm import`.
+The :mc:`mc ilm rule export` command outputs to ``STDOUT`` by default. 
+You can output the contents to a ``.json`` file for archival or ingestion using :mc:`mc ilm rule import`.
 
 .. tab-set::
 
@@ -42,7 +39,7 @@ output the contents to a ``.json`` file for archival or ingestion using
       .. code-block:: shell
          :class: copyable
 
-         mc ilm export myminio/mydata > mydata-lifecycle-config.json
+         mc ilm rule export myminio/mydata > mydata-lifecycle-config.json
 
    .. tab-item:: SYNTAX
 
@@ -51,7 +48,7 @@ output the contents to a ``.json`` file for archival or ingestion using
       .. code-block:: shell
          :class: copyable
 
-         mc [GLOBALFLAGS] ilm export ALIAS > STDOUT
+         mc [GLOBALFLAGS] ilm rule export ALIAS
 
       .. include:: /includes/common-minio-mc.rst
          :start-after: start-minio-syntax
@@ -62,14 +59,14 @@ Parameters
 ~~~~~~~~~~
 
 .. mc-cmd:: ALIAS
+   :required:
    
-   *Required* The :ref:`alias <alias>` and full path to the bucket on the MinIO
-   deployment for which to export object lifecycle management rules. For
-   example:
+   The :ref:`alias <alias>` and full path to the bucket on the MinIO deployment for which to export object lifecycle management rules. 
+   For example:
 
    .. code-block:: none
 
-      mc ilm export myminio/mydata > bucket-lifecycle.json
+      mc ilm rule export myminio/mydata > bucket-lifecycle.json
 
 Global Flags
 ~~~~~~~~~~~~
@@ -94,14 +91,14 @@ Export the Bucket Lifecycle Management Configuration
       .. code-block:: shell
          :class: copyable
 
-         mc ilm export myminio/mybucket > bucket-lifecycle.json
+         mc ilm rule export myminio/mybucket > bucket-lifecycle.json
 
    .. tab-item:: Syntax
 
       .. code-block:: shell
          :class: copyable
 
-         mc ilm export ALIAS > file.json
+         mc ilm rule export ALIAS > file.json
 
       - Replace ``ALIAS`` with the :ref:`alias <alias>` of the MinIO 
         deployment and the bucket for which to export object lifecycle

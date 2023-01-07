@@ -1,8 +1,8 @@
-.. _minio-mc-ilm-ls:
+.. _minio-mc-ilm-rule-ls:
 
-=============
-``mc ilm ls``
-=============
+==================
+``mc ilm rule ls``
+==================
 
 .. default-domain:: minio
 
@@ -10,22 +10,20 @@
    :local:
    :depth: 2
 
-.. mc:: mc ilm ls
+.. mc:: mc ilm rule ls
 
 .. versionchanged:: RELEASE.2022-12-24T15-21-38Z
 
-   ``mc ilm ls`` replaced by :mc-cmd:`mc ilm rule ls`
-
+   ``mc ilm rule ls`` replaces ``mc ilm ls``.
 
 Syntax
 ------
 
-.. start-mc-ilm-ls-desc
+.. start-mc-ilm-rule-ls-desc
 
-The :mc:`mc ilm ls` command summrizes all configured object lifecycle management 
-rules on a MinIO bucket in a tabular format.
+The :mc:`mc ilm rule ls` command summarizes all configured object lifecycle management rules on a MinIO bucket in a tabular format.
 
-.. end-mc-ilm-ls-desc
+.. end-mc-ilm-rule-ls-desc
 
 The output of the command might resemble the following:
 
@@ -65,23 +63,23 @@ The output of the command might resemble the following:
 
    .. tab-item:: EXAMPLE
 
-      The following command lists all lifecycle management rules for the
-      ``mydata`` bucket on the ``myminio`` MinIO deployment:
+      The following command lists all lifecycle management rules for the ``mydata`` bucket on the ``myminio`` MinIO deployment:
 
       .. code-block:: shell
          :class: copyable
 
-         mc ilm ls myminio/mydata
+         mc ilm rule ls myminio/mydata
 
    .. tab-item:: SYNTAX
 
-      The :mc:`mc ilm ls` command has the following syntax:
+      The :mc:`mc ilm rule ls` command has the following syntax:
 
       .. code-block:: shell
          :class: copyable
 
-         mc [GLOBALFLAGS] ilm ls                        \
-                          [--expiry | --transition]     \
+         mc [GLOBALFLAGS] ilm rule ls     \
+                          [--expiry]      \
+                          [--transition]
 
       .. include:: /includes/common-minio-mc.rst
          :start-after: start-minio-syntax
@@ -93,29 +91,27 @@ Parameters
 .. mc-cmd:: ALIAS
    :required:
    
-   The :ref:`alias <alias>` and full path to the bucket on the MinIO
-   deployment for which to list the object lifecycle management rules. For
-   example:
+   The :ref:`alias <alias>` and full path to the bucket on the MinIO deployment for which to list the object lifecycle management rules. 
+   For example:
 
    .. code-block:: none
 
-      mc ilm ls myminio/mydata
+      mc ilm rule ls myminio/mydata
 
 
 .. mc-cmd:: --expiry
    :optional:
    
+   :mc:`mc ilm rule ls` returns only fields related to lifecycle rule expiration.
 
-   :mc:`mc ilm ls` returns only fields related to lifecycle rule expiration.
-
-   Mutually exclusive with :mc-cmd:`~mc ilm ls --transition`.
+   Mutually exclusive with :mc-cmd:`~mc ilm rule ls --transition`.
 
 .. mc-cmd:: --transition
    :optional:
 
-   :mc:`mc ilm ls` returns only fields related to lifecycle rule transition.
+   :mc:`mc ilm rule ls` returns only fields related to lifecycle rule transition.
 
-   Mutually exclusive with :mc-cmd:`~mc ilm ls --expiry`.
+   Mutually exclusive with :mc-cmd:`~mc ilm rule ls --expiry`.
 
 
 Global Flags
@@ -131,18 +127,17 @@ Examples
 List Bucket Lifecycle Management Rules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use :mc:`mc ilm ls` to list a bucket's lifecycle management rules:
+Use :mc:`mc ilm rule ls` to list a bucket's lifecycle management rules:
 
 .. code-block:: shell
    :class: copyable
 
-   mc ilm ls ALIAS/PATH
+   mc ilm rule ls ALIAS/PATH
 
-- Replace :mc-cmd:`ALIAS <mc ilm ls ALIAS>` with the 
+- Replace :mc-cmd:`ALIAS <mc ilm rule s ALIAS>` with the 
   :mc:`alias <mc alias>` of the S3-compatible host.
 
-- Replace :mc-cmd:`PATH <mc ilm ls ALIAS>` with the path to the bucket on the
-  S3-compatible host.
+- Replace ``PATH`` with the path to the bucket on the S3-compatible host.
 
 Behavior
 --------

@@ -1,8 +1,8 @@
-.. _minio-mc-ilm-import:
+.. _minio-mc-ilm-rule-import:
 
-=================
-``mc ilm import``
-=================
+======================
+``mc ilm rule import``
+======================
 
 .. default-domain:: minio
 
@@ -10,39 +10,36 @@
    :local:
    :depth: 2
 
-.. mc:: mc ilm import
+.. mc:: mc ilm rule import
 
 .. versionchanged:: RELEASE.2022-12-24T15-21-38Z
 
-   ``mc ilm import`` replaced by :mc-cmd:`mc ilm rule import`
-
+   ``mc ilm rule import`` replaces ``mc ilm import``.
 
 Syntax
 ------
 
-.. start-mc-ilm-import-desc
+.. start-mc-ilm-rule-import-desc
 
-The :mc:`mc ilm import` command imports an object lifecycle management
+The :mc:`mc ilm rule import` command imports an object lifecycle management
 configuration and applies it to a MinIO bucket.
 
-.. end-mc-ilm-import-desc
+.. end-mc-ilm-rule-import-desc
 
-The :mc:`mc ilm import` command imports from ``STDIN`` by default. You can
-input the contents from a ``.json`` file, such as one produced by
-:mc:`mc ilm export`.
+The :mc:`mc ilm rule import` command imports from ``STDIN`` by default. 
+You can input the contents from a ``.json`` file, such as one produced by :mc:`mc ilm rule export`.
 
 .. tab-set::
 
    .. tab-item:: EXAMPLE
 
       The following command imports the lifecycle management configuration from
-      ``mydata-lifecycle-config.json`` and applies it to the ``mydata`` bucket
-      on the ``myminio`` deployment:
+      ``mydata-lifecycle-config.json`` and applies it to the ``mydata`` bucket on the ``myminio`` deployment:
 
       .. code-block:: shell
          :class: copyable
 
-         mc ilm import myminio/mydata <> mydata-lifecycle-config.json
+         mc ilm rule import myminio/mydata < mydata-lifecycle-config.json
 
    .. tab-item:: SYNTAX
 
@@ -51,7 +48,7 @@ input the contents from a ``.json`` file, such as one produced by
       .. code-block:: shell
          :class: copyable
 
-         mc [GLOBALFLAGS] ilm import ALIAS < STDIN
+         mc [GLOBALFLAGS] ilm rule import ALIAS < STDIN
 
       .. include:: /includes/common-minio-mc.rst
          :start-after: start-minio-syntax
@@ -61,14 +58,14 @@ Parameters
 ~~~~~~~~~~
 
 .. mc-cmd:: ALIAS
+   :required:
    
-   *Required* The :ref:`alias <alias>` and full path to the bucket on the MinIO
-   deployment into which to import object lifecycle management rules. For
-   example:
+   The :ref:`alias <alias>` and full path to the bucket on the MinIO deployment into which to import object lifecycle management rules. 
+   For example:
 
    .. code-block:: none
 
-      mc ilm import myminio/mydata < bucket-lifecycle.json
+      mc ilm rule import myminio/mydata < bucket-lifecycle.json
 
 
 
@@ -95,14 +92,14 @@ Import the Bucket Lifecycle Management Configuration
       .. code-block:: shell
          :class: copyable
 
-         mc ilm import myminio/mybucket < bucket-lifecycle.json
+         mc ilm rule import myminio/mybucket < bucket-lifecycle.json
 
    .. tab-item:: Syntax
 
       .. code-block:: shell
          :class: copyable
 
-         mc ilm import ALIAS < file.json
+         mc ilm rule import ALIAS < file.json
 
       - Replace ``ALIAS`` with the :ref:`alias <alias>` of the MinIO 
         deployment and the bucket into which to import object lifecycle
@@ -120,7 +117,7 @@ Behavior
 Importing Configuration Overrides Existing Rules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:mc:`mc ilm import` replaces the current bucket lifecycle management
+:mc:`mc ilm rule import` replaces the current bucket lifecycle management
 rules with those defined in the imported JSON configuration.
 
 S3 Compatibility

@@ -227,18 +227,12 @@ The following table lists :mc-cmd:`mc` commands:
           :start-after: start-mc-head-desc
           :end-before: end-mc-head-desc
      
-   * - | :mc:`mc ilm add`
-       | :mc:`mc ilm ls`
-       | :mc:`mc ilm edit`
-       | :mc:`mc ilm rm`
-       | :mc:`mc ilm export`
-       | :mc:`mc ilm import`
-     - The ``mc ilm`` command supports managing
-       :ref:`object lifecycle management rules <minio-lifecycle-management>`
-       on a MinIO deployment. 
+   * - | :mc:`mc ilm tier`
+       | :mc:`mc ilm rule`
+       | :mc:`mc ilm restore`
+     - The ``mc ilm`` commands manage :ref:`object lifecycle management rules <minio-lifecycle-management>` on a MinIO deployment. 
 
-       Use this command to set both :ref:`minio-lifecycle-management-tiering` 
-       and :ref:`minio-lifecycle-management-expiration` rules on a bucket.
+       Use these command to create tiers, create :ref:`tiering <minio-lifecycle-management-tiering>` rules, and manage :ref:`expiration <minio-lifecycle-management-expiration>` rules for objects on a bucket.
      
    * - | :mc:`mc legalhold set`
        | :mc:`mc legalhold info`
@@ -553,13 +547,9 @@ All :ref:`commands <minio-mc-commands>` support the following global options:
    /reference/minio-mc/mc-event-remove
    /reference/minio-mc/mc-find
    /reference/minio-mc/mc-head
-   /reference/minio-mc/mc-ilm-add
-   /reference/minio-mc/mc-ilm-edit
-   /reference/minio-mc/mc-ilm-ls
    /reference/minio-mc/mc-ilm-restore
-   /reference/minio-mc/mc-ilm-rm
-   /reference/minio-mc/mc-ilm-export
-   /reference/minio-mc/mc-ilm-import
+   /reference/minio-mc/mc-ilm-rule
+   /reference/minio-mc/mc-ilm-tier
    /reference/minio-mc/mc-legalhold-set
    /reference/minio-mc/mc-legalhold-info
    /reference/minio-mc/mc-legalhold-clear
@@ -610,3 +600,4 @@ All :ref:`commands <minio-mc-commands>` support the following global options:
    /reference/minio-mc/mc-update
    /reference/minio-mc/mc-version
    /reference/minio-mc/mc-watch
+   /reference/minio-mc-deprecated

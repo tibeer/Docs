@@ -1,8 +1,8 @@
-.. _minio-mc-ilm-add:
+.. _minio-mc-ilm-rule-add:
 
-==============
-``mc ilm add``
-==============
+===================
+``mc ilm rule add``
+===================
 
 .. default-domain:: minio
 
@@ -10,20 +10,62 @@
    :local:
    :depth: 2
 
-.. mc:: mc ilm add
+.. mc:: mc ilm rule add
 
 .. versionchanged:: RELEASE.2022-12-24T15-21-38Z
 
-   ``mc ilm add`` replaced by :mc-cmd:`mc ilm rule add`
+   ``mc ilm rule rm`` replaces ``mc ilm add``.
+
+
+Description
+-----------
+
+.. start-mc-ilm-rule-add-desc
+
+The :mc:`mc ilm rule add` command adds an object lifecycle management rule to a bucket.
+
+.. end-mc-ilm-rule-add-desc
+
+Required Permissions
+--------------------
+
+MinIO requires the following permissions scoped to to the bucket or buckets 
+for which you are creating lifecycle management rules.
+
+- :policy-action:`s3:PutLifecycleConfiguration`
+- :policy-action:`s3:GetLifecycleConfiguration`
+
+For example, the following policy provides permission for configuring object
+transition lifecycle management rules on any bucket in the cluster:.
+
+.. literalinclude:: /extra/examples/LifecycleManagementAdmin.json
+   :language: json
+   :class: copyable
+
+Transition Permissions
+++++++++++++++++++++++
+
+Object transition lifecycle management rules require additional permissions on the remote storage tier. 
+Specifically, MinIO requires the remote tier credentials provide read, write, list, and delete permissions.
+
+For example, if the remote storage tier implements AWS IAM policy-based access control, the following policy provides the necessary permission for transitioning objects into and out of the remote tier:
+
+.. literalinclude:: /extra/examples/LifecycleManagementUser.json
+   :language: json
+   :class: copyable
+
+Modify the ``Resource`` for the bucket into which MinIO tiers objects.
+
+Defer to the documentation for the supported tiering targets for more complete
+information on configuring users and permissions to support MinIO tiering:
+
+- :aws-docs:`Amazon S3 Permissions <service-authorization/latest/reference/list_amazons3.html#amazons3-actions-as-permissions>`
+- `Google Cloud Storage Access Control <https://cloud.google.com/storage/docs/access-control>`__
+- `Authorizing access to data in Azure storage <https://docs.microsoft.com/en-us/azure/storage/common/storage-auth?toc=/azure/storage/blobs/toc.json>`__
+
 
 Syntax
 ------
-
-.. start-mc-ilm-add-desc
-
-The :mc:`mc ilm add` command adds an object lifecycle management rule to a bucket.
-
-.. end-mc-ilm-add-desc
 
 The command supports adding both :ref:`Transition (Tiering) <minio-lifecycle-management-tiering>` and :ref:`Expiration <minio-lifecycle-management-expiration>` lifecycle management rules.
 
@@ -36,13 +78,13 @@ The command supports adding both :ref:`Transition (Tiering) <minio-lifecycle-man
       .. code-block:: shell
          :class: copyable
 
-         mc ilm add --expire-days 90 --noncurrent-expire-days 30  mydata/myminio
+         mc ilm rule add --expire-days 90 --noncurrent-expire-days 30  mydata/myminio
          
-         mc ilm add --expire-delete-marker mydata/myminio
+         mc ilm rule add --expire-delete-marker mydata/myminio
 
-         mc ilm add --transition-days 30 --transition-tier "COLDTIER" mydata/myminio
+         mc ilm rule add --transition-days 30 --transition-tier "COLDTIER" mydata/myminio
          
-         mc ilm add --noncurrent-transition-days 7 --noncurrent-transition-tier "COLDTIER" 
+         mc ilm rule add --noncurrent-transition-days 7 --noncurrent-transition-tier "COLDTIER" 
 
       The configured rules have the following effect:
 
@@ -59,10 +101,10 @@ The command supports adding both :ref:`Transition (Tiering) <minio-lifecycle-man
       .. code-block:: shell
          :class: copyable
 
-         mc [GLOBALFLAGS] ilm add                                    \
+         mc [GLOBALFLAGS] ilm rule add                               \
                           [--prefix string]                          \
                           [--tags string]                            \
-                          --expire-days "integer"                    \
+                          [--expire-days "integer"]                  \
                           [--expire-delete-marker]                   \
                           [--transition-days "string"]               \
                           [--transition-tier "string"]               \
@@ -89,7 +131,7 @@ Parameters
 
    .. code-block:: none
 
-      mc ilm add myminio/mydata
+      mc ilm rule add myminio/mydata
 
 .. mc-cmd:: --prefix
    :optional:
@@ -100,7 +142,7 @@ Parameters
 
    .. code-block:: none
 
-      mc ilm add --prefix "meetingnotes/" myminio/mydata/ --expire-days "90"
+      mc ilm rule add --prefix "meetingnotes/" myminio/mydata/ --expire-days "90"
 
    The command creates a rule that expires objects in the ``mydata`` bucket of the ``myminio`` ALIAS after 90 days for any object with the ``meetingnotes/`` prefix.
 
@@ -111,7 +153,7 @@ Parameters
 
    This option is mutually exclusive with the following option:
 
-   - :mc-cmd:`~mc ilm add --expire-delete-marker`
+   - :mc-cmd:`~mc ilm rule add --expire-delete-marker`
 
 .. mc-cmd:: --expire-days
    :required:   
@@ -121,7 +163,7 @@ Parameters
    Specify the number of days as an integer, e.g. ``30`` for 30 days.
 
    For versioned buckets, the expiry rule applies only to the *current* object version. 
-   Use the :mc-cmd:`~mc ilm add --noncurrent-expire-days` option to apply expiration behavior to noncurrent object versions.
+   Use the :mc-cmd:`~mc ilm rule add --noncurrent-expire-days` option to apply expiration behavior to noncurrent object versions.
 
    MinIO uses a scanner process to check objects against all configured lifecycle management rules. 
    Slow scanning due to high IO workloads or limited system resources may delay application of lifecycle management rules. 
@@ -129,7 +171,7 @@ Parameters
 
    Mutually exclusive with the following options:
 
-   - :mc-cmd:`~mc ilm add --expire-delete-marker`
+   - :mc-cmd:`~mc ilm rule add --expire-delete-marker`
 
    For more complete documentation on object expiration, see :ref:`minio-lifecycle-management-expiration`.
 
@@ -141,8 +183,8 @@ Parameters
 
    This option is mutually exclusive with the following option:
    
-   - :mc-cmd:`~mc ilm add --tags`
-   - :mc-cmd:`~mc ilm add --expire-days`
+   - :mc-cmd:`~mc ilm rule add --tags`
+   - :mc-cmd:`~mc ilm rule add --expire-days`
 
    MinIO uses a scanner process to check objects against all configured lifecycle management rules. 
    Slow scanning due to high IO workloads or limited system resources may delay application of lifecycle management rules. 
@@ -155,13 +197,13 @@ Parameters
    :optional:
    
    The number of calendar days from object creation after which MinIO marks an object as eligible for transition. 
-   MinIO transitions the object to the configured remote tier specified to the :mc-cmd:`~mc ilm add --transition-tier`. 
+   MinIO transitions the object to the configured remote tier specified to the :mc-cmd:`~mc ilm rule add --transition-tier`. 
    Specify the number of days as an integer, e.g. ``30`` for 30 days.
 
    For versioned buckets, the transition rule applies only to the *current* object version. 
-   Use the :mc-cmd:`~mc ilm add --noncurrent-transition-days` option to apply transition behavior to noncurrent object versions.
+   Use the :mc-cmd:`~mc ilm rule add --noncurrent-transition-days` option to apply transition behavior to noncurrent object versions.
 
-   Requires specifying :mc-cmd:`~mc ilm add --transition-tier`.
+   Requires specifying :mc-cmd:`~mc ilm rule add --transition-tier`.
 
    MinIO uses a scanner process to check objects against all configured lifecycle management rules. 
    Slow scanning due to high IO workloads or limited system resources may delay application of lifecycle management rules. 
@@ -173,9 +215,9 @@ Parameters
    :optional:
 
    The remote tier to which MinIO :ref:`transition objects <minio-lifecycle-management-tiering>`.
-   Specify an existing remote tier created by :mc:`mc admin tier`. 
+   Specify an existing remote tier created by :mc:`mc ilm tier add`. 
 
-   Required if specifying :mc-cmd:`~mc ilm add --transition-days`.
+   Required if specifying :mc-cmd:`~mc ilm rule add --transition-days`.
 
 .. mc-cmd:: --noncurrent-expire-days
    :optional:
@@ -193,10 +235,10 @@ Parameters
    :optional:
 
    The number of days an object has been non-current (i.e. replaced by a newer version of that same object) after which MinIO marks the object version as eligible for transition. 
-   MinIO transitions the object to the configured remote tier specified to the :mc-cmd:`~mc ilm add --transition-tier` once the system host datetime passes that calendar date.
+   MinIO transitions the object to the configured remote tier specified to the :mc-cmd:`~mc ilm rule add --transition-tier` once the system host datetime passes that calendar date.
 
    This option has no effect on non-versioned buckets. 
-   Requires specifying :mc-cmd:`~mc ilm add --noncurrent-transition-tier`.
+   Requires specifying :mc-cmd:`~mc ilm rule add --noncurrent-transition-tier`.
 
    This option has the same behavior as the S3 ``NoncurrentVersionTransition`` action.
 
@@ -208,7 +250,7 @@ Parameters
    :optional:
 
    The remote tier to which MinIO :ref:`transitions noncurrent objects versions <minio-lifecycle-management-tiering>`. 
-   Specify a remote tier created by :mc:`mc admin tier`.
+   Specify a remote tier created by :mc:`mc ilm tier add`.
 
 .. mc-cmd:: --noncurrent-expire-newer
    :optional:
@@ -302,30 +344,30 @@ Examples
 Expire All Bucket Contents After Number of Days
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use :mc:`mc ilm add` with :mc-cmd:`~mc ilm add --expire-days` to mark bucket contents for expiration after a number of days pass from the object's creation:
+Use :mc:`mc ilm rule add` with :mc-cmd:`~mc ilm rule add --expire-days` to mark bucket contents for expiration after a number of days pass from the object's creation:
 
 .. code-block:: shell
    :class: copyable
 
-   mc ilm add ALIAS/PATH --expire-days "DAYS" 
+   mc ilm rule add ALIAS/PATH --expire-days "DAYS" 
 
-- Replace :mc-cmd:`ALIAS <mc ilm add ALIAS>` with the :mc:`alias <mc alias>` of the S3-compatible host.
+- Replace :mc-cmd:`ALIAS <mc ilm rule add ALIAS>` with the :mc:`alias <mc alias>` of the S3-compatible host.
 
-- Replace :mc-cmd:`PATH <mc ilm add ALIAS>` with the path to the bucket on the S3-compatible host.
+- Replace :mc-cmd:`PATH <mc ilm rule add ALIAS>` with the path to the bucket on the S3-compatible host.
 
-- Replace :mc-cmd:`DATE <mc ilm add --expire-days>` with the number of days after which to expire the object. 
+- Replace :mc-cmd:`DATE <mc ilm rule add --expire-days>` with the number of days after which to expire the object. 
   For example, specify ``30`` to expire the object 30 days after creation.
 
 Transition Non-Current Object Versions at a Prefix to a Different Tier
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the :mc:`mc ilm add` with :mc-cmd:`~mc ilm add --prefix` and :mc-cmd:`~mc ilm add --transition-tier` to transition older non-current versions of an object to a different storage tier.
+Use the :mc:`mc ilm rule add` with :mc-cmd:`~mc ilm rule add --prefix` and :mc-cmd:`~mc ilm rule add --transition-tier` to transition older non-current versions of an object to a different storage tier.
 
 .. code-block:: shell
    :class: copyable
 
-   mc ilm add --prefix "doc/" --transition-days "90" --trasition-tier "MINIOTIER-1"                  \
-          --noncurrent-transition-days "45" --noncurrent-transition-tier "MINIOTIER-2"  \
+   mc ilm rule add --prefix "doc/" --transition-days "90" --trasition-tier "MINIOTIER-1"  \
+          --noncurrent-transition-days "45" --noncurrent-transition-tier "MINIOTIER-2"    \
           myminio/mybucket/
 
 This command looks at the contents with the ``doc/`` prefix in the ``mybucket`` bucket on the ``myminio`` deployment.
@@ -337,12 +379,12 @@ This command looks at the contents with the ``doc/`` prefix in the ``mybucket`` 
 Expire All Objects at a Prefix, Retain Current Object Versions Longer Than Non-Current Object Versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the :mc:`mc ilm add` command with :mc-cmd:`~mc ilm add --prefix`, :mc-cmd:`~mc ilm add --expire-days`, and :mc-cmd:`~mc ilm add --noncurrent-expire-days` to expire current and non-current versions of an object at different times.
+Use the :mc:`mc ilm rule add` command with :mc-cmd:`~mc ilm rule add --prefix`, :mc-cmd:`~mc ilm rule add --expire-days`, and :mc-cmd:`~mc ilm rule add --noncurrent-expire-days` to expire current and non-current versions of an object at different times.
 
 .. code-block:: shell
    :class: copyable
 
-   mc ilm add --prefix "doc/" --expire-days "300" --noncurrent-expire-days "100" myminio/mybucket/
+   mc ilm rule add --prefix "doc/" --expire-days "300" --noncurrent-expire-days "100" myminio/mybucket/
 
 This command looks at the contents with the ``doc/`` prefix in the ``mybucket`` bucket on the ``myminio`` deployment.
 
@@ -366,7 +408,7 @@ Expiry vs Transition
 MinIO supports specifying both expiry and transition rules in the same
 bucket or bucket prefix. MinIO can execute an expiration rule on an object
 regardless of its transition status. Use
-:mc:`mc ilm ls` to review the currently configured object lifecycle
+:mc:`mc ilm rule ls` to review the currently configured object lifecycle
 management rules for any potential interactions between expiry and transition
 rules.
 

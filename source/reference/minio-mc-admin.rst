@@ -130,11 +130,6 @@ The following table lists :mc:`mc admin` commands:
           :start-after: start-mc-admin-speedtest-desc
           :end-before: end-mc-admin-speedtest-desc
 
-   * - :mc:`mc admin tier`
-     - .. include:: /reference/minio-mc-admin/mc-admin-tier.rst
-          :start-after: start-mc-admin-tier-desc
-          :end-before: end-mc-admin-tier-desc
-
    * - :mc-cmd:`mc admin top`
      - .. include:: /reference/minio-mc-admin/mc-admin-top.rst
           :start-after: start-mc-admin-top-desc
