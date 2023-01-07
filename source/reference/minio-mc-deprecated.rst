@@ -66,9 +66,38 @@ Table of Deprecated Admin Commands
      - Replacement Command
      - Version of Change
 
-   * - ``mc admin tier``
+   * - ``mc admin tier add``
      - :mc-cmd:`mc ilm tier add`
      - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin tier edit``
+     - :mc-cmd:`mc ilm tier update`
+     - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin tier ls``
+     - :mc-cmd:`mc ilm tier ls`
+     - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin bucket remote add``
+     - :mc-cmd:`mc replicate add`
+     - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin bucket remote rm``
+     - :mc-cmd:`mc replicate rm`
+     - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin bucket remote ls``
+     - :mc-cmd:`mc replicate ls`
+     - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin bucket remote update``
+     - :mc-cmd:`mc replicate update`
+     - mc RELEASE.2022-12-24T15-21-38Z
+
+   * - ``mc admin bucket quota``
+     - :mc-cmd:`mc quota clear`, :mc-cmd:`mc quota info`, :mc-cmd:`mc quota set`
+     - mc RELEASE.2022-12-13T00-23-28Z
+
 
 
 .. toctree::
