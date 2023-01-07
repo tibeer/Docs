@@ -8,8 +8,6 @@ Deprecated Commands
    :local:
    :depth: 1
 
-.. mc:: mc
-
 The following table lists the commands deprecated by MinIO.
 The table includes:
 
@@ -104,10 +102,11 @@ Table of Deprecated Admin Commands
    :titlesonly:
    :hidden:
    
-   /reference/minio-mc/mc-ilm-add
-   /reference/minio-mc/mc-ilm-edit
-   /reference/minio-mc/mc-ilm-export
-   /reference/minio-mc/mc-ilm-import
-   /reference/minio-mc/mc-ilm-ls
-   /reference/minio-mc/mc-ilm-rm
-   /reference/minio-mc-admin/mc-admin-tier
+   /reference/deprecated/mc-ilm-add
+   /reference/deprecated/mc-ilm-edit
+   /reference/deprecated/mc-ilm-export
+   /reference/deprecated/mc-ilm-import
+   /reference/deprecated/mc-ilm-ls
+   /reference/deprecated/mc-ilm-rm
+   /reference/deprecated/mc-admin-tier
+   /reference/deprecated/mc-admin-bucket-quota
