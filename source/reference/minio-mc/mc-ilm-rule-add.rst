@@ -43,7 +43,7 @@ transition lifecycle management rules on any bucket in the cluster:.
    :class: copyable
 
 Transition Permissions
-++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~
 
 Object transition lifecycle management rules require additional permissions on the remote storage tier. 
 Specifically, MinIO requires the remote tier credentials provide read, write, list, and delete permissions.
